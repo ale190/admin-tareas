@@ -1,0 +1,9 @@
+<h3 align="left">Editar Actividad</h3>
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Confirmar cambios</button>
+</form>
+<p>{{ mensaje }}</p>
+<br>
+<p align="left"><a href="/">Regresar</a></p>
