@@ -37,7 +37,7 @@ def login(request):
                 # Hacemos el login manualmente
                 do_login(request, user)
                 # Y le redireccionamos a la portada
-                return redirect('/welcome')
+                return redirect('/')
 
     # Si llegamos al final renderizamos el formulario
     return render(request, "login.html", {'form': form})
@@ -46,7 +46,7 @@ def logout(request):
     # Finalizamos la sesión
     do_logout(request)
     # Redireccionamos a la portada
-    return redirect('/')
+    return redirect('/login')
 
 def welcome(request, *args, **kwargs):
     #Obtenemos el id del usuario logueado
