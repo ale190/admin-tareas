@@ -20,7 +20,7 @@ from . import views
 urlpatterns = [
     path('tareas/', include('tareas.urls')),
     path('admin/', admin.site.urls, name="admin"),
-    path('login', views.login),
+    path('', views.login),
     path('logout', views.logout),
     path('agregarActividad', views.agregarActividad),
     path('agregarActGrupoAct/<int:idGrupoActividad>', views.agregarActGrupoAct),
@@ -29,5 +29,5 @@ urlpatterns = [
     path('finalizarTarea/<int:idActividad>', views.finalizarTarea),
     path('agregarGrupoAct', views.agregarGrupoAct),
     path('editarActividad/<int:idActividad>', views.editarActividad),
-    path('', views.welcome),
+    path('welcome', views.welcome),
 ]
