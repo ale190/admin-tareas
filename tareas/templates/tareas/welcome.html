@@ -52,7 +52,6 @@
           top:0px;
       }
 
-
     </style>
   </head>
   <body>
@@ -66,17 +65,25 @@
     <hr />
     <br>
     <!--Mostramos todas las actividades en la plantilla-->
-    <table border=1>
+    <table border="1">
       <tr>
         <th colspan="9">Actividades Pendientes</th>
       </tr>
       <tr>
-        <th>Nombre</th><th>Informe</th><th>Crear</th><th>Prioridad</th><th>Solicitudes</th><th>Crear</th><th>Tiempo Inicio</th><th>Tiempo Fin</th><th>Comentarios</th>
+        <th>Fecha Inicio</th><th>Nombre</th><th>Prioridad</th><th>Informe</th><th>Crear</th><th>Solicitudes</th><th>Crear</th><th>Comentarios</th><th>Finalizar</th>
       </tr>
       {% for actividad in actividades %}
-      {% if actividad.estado.id != 1 %}
+      {% if actividad.estado.id != 2 %}
       <tr align="center">
-        <td>{{ actividad.nombre }}</td>
+        <td>{{ actividad.fechaI }}</td>
+
+        <td><a href="editarActividad/{{ actividad.id }}">{{ actividad.nombre }}</a></td>
+
+        {% for prioridad in prioridades %}
+        {% if prioridad.id  == actividad.prioridad_id %}
+        <td> {{ prioridad.nombre }} </td>
+        {% endif %}
+        {% endfor %}
 
           <td>{{ actividad.grupoactividad|default_if_none:"&nbsp;" }}</td>
 
@@ -86,11 +93,6 @@
           <td></td>
           {% endif %}
 
-          {% for prioridad in prioridades %}
-          {% if prioridad.id  == actividad.prioridad_id %}
-          <td> {{ prioridad.nombre }} </td>
-          {% endif %}
-          {% endfor %}
           <td>
           <div id="header">
             <ul class="nav">
@@ -107,18 +109,25 @@
           </div>
           </td>
           <td><a href="agregarSolicitud/{{ actividad.id }}">+</a></td>
-          <td>{{ actividad.fechaI }}</td>
-          <td>{{ actividad.fechaF }}</td>
           <td>{{ actividad.comentarios|default_if_none:"&nbsp;"}}</td>
+          <td><a href="finalizarTarea/{{ actividad.id }}">Confirmar</a></td>
       </tr>
       {% endif %}
       {% endfor %}
     </table>
 <br>
-<a href="/agregarActividad">Crear Actividad</a>
+<a href="agregarActividad">Crear Actividad</a>
     <br>
     <br>
-  <a href="/welcome">Regresar</a>
+<a href="agregarGrupoAct">Crear Informe</a>
+    <br>
+    <br>
+<a href="actividadesFinalizadas">Mostrar Actividades Finalizadas</a>
+    <br>
+    <br>
+  <a href="logout">Cerrar sesión</a>
 
   </body>
+
+
 </html>

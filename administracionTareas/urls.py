@@ -15,19 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from . import views
 
 urlpatterns = [
     path('tareas/', include('tareas.urls')),
     path('admin/', admin.site.urls, name="admin"),
-    path('', views.login),
-    path('logout', views.logout),
-    path('agregarActividad', views.agregarActividad),
-    path('agregarActGrupoAct/<int:idGrupoActividad>', views.agregarActGrupoAct),
-    path('agregarSolicitud/<int:idActividad>', views.agregarSolicitud),
-    path('actividadesFinalizadas', views.actividadesFinalizadas),
-    path('finalizarTarea/<int:idActividad>', views.finalizarTarea),
-    path('agregarGrupoAct', views.agregarGrupoAct),
-    path('editarActividad/<int:idActividad>', views.editarActividad),
-    path('welcome', views.welcome),
+    path('', views.home),
 ]
+
+urlpatterns += staticfiles_urlpatterns()

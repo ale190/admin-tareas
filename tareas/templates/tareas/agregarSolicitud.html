@@ -1,13 +1,13 @@
 <table border="2" bgcolor="33FF61" align="center">
 <form action="" method="POST">{% csrf_token %}
   <tr>
-    <th colspan="2">NUEVA ACTIVIDAD</th>
+    <th colspan="2">NUEVA SOLICITUD</th>
   </tr>
   <tr>
     <td>Nombre:</td><td>{{ form.nombre }}</td>
   </tr>
   <tr>
-    <td>Prioridad:</td><td>{{ form.prioridad }}</td>
+    <td>Sector:</td><td>{{ form.sector }}</td>
   </tr>
   <tr>
     <th colspan="2"><button type="submit" style="width:230px">Crear</button></th>
@@ -17,4 +17,4 @@
 <br>
 <p align="center">{{ mensaje }}</p>
 <br>
-<p align="center"><a href="/welcome">Regresar</a></p>
+<p align="center"><a href="welcome">Regresar</a></p>
