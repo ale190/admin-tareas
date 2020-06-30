@@ -148,7 +148,7 @@ def actividadesFinalizadas(request, *args, **kwargs):
 def finalizarTarea(request, idActividad):
     fechaF = time.strftime("%Y-%m-%d %H:%M:%S")
     instancia = Actividad.objects.filter(id=idActividad).update(estado_id=2,fechaF=fechaF)
-    return redirect('/actividadesFinalizadas')
+    return redirect('/tareas/actividadesFinalizadas')
 
 def agregarGrupoAct(request):
     form = GrupoActividadForm()
