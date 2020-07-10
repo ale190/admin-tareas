@@ -107,8 +107,8 @@
                     {% for solicitud in solicitudes %}
                     <tr align="center">
                       <td><a href="/tareas/editarSolicitud/{{ solicitud.id }}">{{ solicitud.nombre }}</a></td>
-                      <td style="color:white">{{ solicitud.sector }}</td>
-                      <td style="color:white">{{ solicitud.estado }}</td>
+                      <td>{{ solicitud.sector }}</td>
+                      <td>{{ solicitud.estado }}</td>
                       <td><a href="/tareas/eliminarSolicitud/{{ solicitud.id }}">x</a></td>
                     </tr>
                     {% endfor %}
