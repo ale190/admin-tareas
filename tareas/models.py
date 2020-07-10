@@ -28,8 +28,6 @@ class GrupoActividad(models.Model):
 
 class Actividad(models.Model):
     nombre = models.CharField(max_length=100)
-    fechaI = models.DateTimeField(auto_now_add=True)
-    fechaF = models.DateTimeField(auto_now_add=True)
     comentarios = models.CharField(max_length=200, blank=True, null=True)
     prioridad = models.ForeignKey(Prioridad, on_delete=models.CASCADE)
     estado = models.ForeignKey(Estado, on_delete=models.CASCADE)
@@ -43,6 +41,7 @@ class Solicitud(models.Model):
     nombre = models.CharField(max_length=100)
     actividad = models.ForeignKey(Actividad, on_delete=models.CASCADE)
     sector = models.ForeignKey(Sector, on_delete=models.CASCADE)
+    estado = models.ForeignKey(Estado, on_delete=models.CASCADE)
 
     def __str__(self):
-        return '%s %s %s %s' % (self.nombre, self.actividad, self.sector)
+        return '%s %s %s %s' % (self.nombre, self.actividad, self.sector, self.estado)

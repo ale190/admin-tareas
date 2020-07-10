@@ -95,14 +95,14 @@
           <thead class="thead-dark">
             <form action="" method="POST">{% csrf_token %}
               <tr align="center">
-                <th colspan="2">Crear Solicitud</th>
+                <th colspan="2">Crear Informe</th>
               </tr>
               <tbody>
               <tr align="right">
                 <td style="color:white">Nombre:</td><td align="center">{{ form.nombre }}</td>
               </tr>
               <tr align="right">
-                <td style="color:white">Sector:</td><td align="center">{{ form.sector }}</td>
+                <td style="color:white">Prioridad:</td><td align="center">{{ form.prioridad }}</td>
               </tr>
               <tr align="center">
                 <th colspan="2"><button type="submit" style="width:230px">Crear</button></th>
@@ -111,9 +111,6 @@
               </tbody>
           </thead>
         </table>
-            <br>
-            <p align="center">{{ mensaje }}</p>
-            <br>
               </div>
             </div>
       </header>

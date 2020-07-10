@@ -207,7 +207,7 @@ svg {
 }
 
 table {
-  border-collapse: collapse;
+  border-collapse: separate;
 }
 
 caption {
@@ -10102,6 +10102,7 @@ header.masthead {
   background-attachment: scroll;
   background-size: cover;
 }
+
 header.masthead h1 {
   font-size: 2.25rem;
 }
