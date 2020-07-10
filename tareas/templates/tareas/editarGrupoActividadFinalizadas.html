@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <meta name="description" content="" />
   <meta name="author" content="" />
-  <title>Editar Actividad</title>
+  <title>Editar Tareas</title>
   <!-- Favicon-->
   <link rel="icon" type="image/x-icon" href="{% static 'assets/img/favicon.ico' %}" />
   <!-- Font Awesome icons (free version)-->
@@ -26,7 +26,7 @@
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto my-2 my-lg-0">
-          <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/tareas/agregarSolicitud/{{ instancia.id }}">Agregar solicitud</a></li>
+          <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/tareas/agregarActGrupoAct/{{ instancia.id }}">Agregar actividad</a></li>
           <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/tareas/welcome">Regresar</a></li>
           <li class="nav-item"><a class="nav-link js-scroll-trigger" href="logout">Cerrar sesión</a></li>
         </ul>
@@ -39,6 +39,7 @@
     <div class="container h-100">
       <div class="row h-100 align-items-center justify-content-center text-center">-->
 
+
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -47,13 +48,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link" href="/tareas/agregarSolicitud/{{ instancia.id }}">Agregar solicitud</a>
+              <a class="nav-link" href="/tareas/agregarActGrupoAct/{{ instancia.id }}">Agregar actividad</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/tareas/welcome">Regresar</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/tareas/logout">Cerrar sesión</a>
+              <a class="nav-link" href="logout">Cerrar sesión</a>
             </li>
           </ul>
           <!--<form class="form-inline my-2 my-lg-0">
@@ -69,23 +70,14 @@
             <form action="" method="POST">
               {% csrf_token %}
             <tr align="center">
-              <th scope="col" colspan="2">Editar Actividad</th>
+              <th scope="col" colspan="2">Editar Informe</th>
             </tr>
             <tbody>
             <tr align="right">
               <td>Nombre:</td><td align="center">{{ form.nombre }}</td>
             </tr>
             <tr align="right">
-              <td>Comentarios:</td><td align="center">{{ form.comentarios }}</td>
-            </tr>
-            <tr align="right">
               <td>Prioridad:</td><td align="center">{{ form.prioridad }}</td>
-            </tr>
-            <tr align="right">
-              <td>Informe:</td><td align="center">{{ form.grupoactividad }}</td>
-            </tr>
-            <tr align="right">
-              <td>Estado:</td><td align="center">{{ form.estado }}</td>
             </tr>
             <tr align="center">
               <td colspan="2"><button type="submit">Guardar cambios</button></td>
@@ -95,30 +87,37 @@
           </thead>
         </table>
 <hr/>
-                <table class="table">
-                  <thead class="thead-dark">
-                    <tr align="center">
-                      <th scope="col" colspan="4">Listado de Solicitudes</th>
-                    </tr>
-                    <tr align="center">
-                      <th scope="col">Nombre Solicitud</th>
-                      <th scope="col">Sector Vinculado</th>
-                      <th scope="col">Estado de Solicitud</th>
-                      <th scope="col">Eliminar Solicitud</th>
-                    </tr>
-                    <tbody>
-                    {% for solicitud in solicitudes %}
-                    <tr align="center">
-                      <td><a href="/tareas/editarSolicitud/{{ solicitud.id }}">{{ solicitud.nombre }}</a></td>
-                      <td style="color:white">{{ solicitud.sector }}</td>
-                      <td style="color:white">{{ solicitud.estado }}</td>
-                      <td><a href="/tareas/eliminarSolicitud/{{ solicitud.id }}">x</a></td>
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                  </thead>
-                </table>
-              <!--</div>
+<table class="table">
+  <thead class="thead-dark">
+    <tr align="center">
+      <th scope="col" colspan="4">Actividades Finalizadas</th>
+    </th>
+    <tr align="center">
+      <th scope="col">Nombre Actividad</th>
+      <th scope="col">Prioridad</th>
+      <th scope="col">Comentarios</th>
+      <th scope="col">Eliminar Actividad</th>
+    </tr>
+    <tbody>
+    {% for actividad in actividades %}
+    {% if actividad.estado.id == 2 %}
+    <tr align="center">
+      <td><a href="/tareas/editarActividad/{{ actividad.id }}">{{ actividad.nombre }}</a></td>
+      <!--{% for prioridad in prioridades %}
+      {% if prioridad.id  == actividad.prioridad_id %}
+      <td> {{ prioridad.nombre }} </td>
+      {% endif %}
+      {% endfor %}-->
+      <td> {{ actividad.prioridad }} </td>
+      <td>{{ actividad.comentarios|default_if_none:"&nbsp;"}}</td>
+      <td><a href="/tareas/eliminarActividad/{{ actividad.id }}">x</a></td>
+    </tr>
+    {% endif %}
+    {% endfor %}
+    </tbody>
+  </thead>
+</table>
+<!--              </div>
             </div>
           </header>-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

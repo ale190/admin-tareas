@@ -228,6 +228,21 @@ def editarGrupoActividad(request, idGrupoActividad):
             return redirect('/tareas/welcome')
     return render(request, 'tareas/editarGrupoActividad.html', context)
 
+def editarGrupoActividadFinalizadas(request, idGrupoActividad):
+    instancia = GrupoActividad.objects.get(id=idGrupoActividad)
+    actividades = Actividad.objects.filter(grupoactividad_id=idGrupoActividad)
+    form = GrupoActividadForm(instance=instancia)
+    context = {'form':form,'actividades':actividades,'instancia':instancia}
+    if request.method == "POST":
+        form = GrupoActividadForm(request.POST, instance=instancia)
+        if form.is_valid():
+            instancia = form.save(commit=False)
+            instancia.save()
+            #mensaje= "El informe se modificó correctamente!"
+            context = {'form':form,'actividades':actividades,'instancia':instancia}
+            return redirect('/tareas/welcome')
+    return render(request, 'tareas/editarGrupoActividadFinalizadas.html', context)
+
 def eliminarSolicitud(request, idSolicitud):
     instancia = Solicitud.objects.get(id=idSolicitud)
     instancia.delete()

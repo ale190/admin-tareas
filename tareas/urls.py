@@ -17,6 +17,7 @@ urlpatterns = [
     path('editarSolicitud/<int:idSolicitud>', views.editarSolicitud),
     path('listarGrupoAct/<int:idGrupoActividad>', views.listarGrupoAct),
     path('editarGrupoActividad/<int:idGrupoActividad>', views.editarGrupoActividad),
+    path('editarGrupoActividadFinalizadas/<int:idGrupoActividad>', views.editarGrupoActividadFinalizadas),
     path('eliminarSolicitud/<int:idSolicitud>', views.eliminarSolicitud),
     path('eliminarGrupoActividad/<int:idGrupoActividad>', views.eliminarGrupoActividad),
 ]

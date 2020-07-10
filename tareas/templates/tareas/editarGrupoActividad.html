@@ -100,7 +100,7 @@
     </tr>
     <tbody>
     {% for actividad in actividades %}
-    {% if actividad.estado.id != 2 %}
+    {% if actividad.estado.id == 1 %}
     <tr align="center">
       <td><a href="/tareas/editarActividad/{{ actividad.id }}">{{ actividad.nombre }}</a></td>
       <!--{% for prioridad in prioridades %}

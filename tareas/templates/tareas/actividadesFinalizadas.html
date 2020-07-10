@@ -51,7 +51,7 @@
                         <a class="nav-link" href="/tareas/welcome">Regresar</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="logout">Cerrar sesión</a>
+                        <a class="nav-link" href="/tareas/logout">Cerrar sesión</a>
                       </li>
                     </ul>
                     <!--<form class="form-inline my-2 my-lg-0">
@@ -107,7 +107,7 @@
                               {% for actividad2 in actividades2 %}
                               {% if actividad2.estado.id == 2 %}
                               <tr align="center">
-                                <td scope="col"><a href="listarGrupoAct/{{ actividad2.grupoactividad.id }}">{{ actividad2.grupoactividad }}</a></td>
+                                <td scope="col"><a href="editarGrupoActividadFinalizadas/{{ actividad2.grupoactividad.id }}">{{ actividad2.grupoactividad }}</a></td>
                                 <td>{{ actividad2.grupoactividad.prioridad }}</td>
                                 <td><a href="eliminarGrupoActividad/{{ actividad2.grupoactividad.id }}">x</a></td>
                               </tr>
