@@ -87,11 +87,11 @@
                               {% for actividad in actividades %}
                               {% if actividad.estado.id == 1 %}
                               <tr align="center">
-                                <td><a href="editarActividad/{{ actividad.id }}">{{ actividad.nombre }}</a></td>
+                                <td><a href="editarActividad/{{ actividad.id }}">{{ actividad.nombre }}</a>Click para editar y ver solicitudes vinculadas</td>
 
                                 <td> {{ actividad.prioridad }} </td>
                                 <td>{{ actividad.comentarios|default_if_none:"&nbsp;"}}</td>
-                                <td><a href="eliminarActividad/{{ actividad.id }}">x</a></td>
+                                <td><a href="eliminarActividad/{{ actividad.id }}">x</a>Click para borrar</td>
                               </tr>
                               {% endif %}
                               {% endfor %}
@@ -102,7 +102,7 @@
                           <table class="table">
                             <thead class="thead-dark">
                               <tr align="center">
-                                <th scope="col" colspan="3">Informes Pendientes</th>
+                                <th scope="col" colspan="3">Informes Pendientes(Para visualizar informes, debes agregar una actividad a alguno de ellos)</th>
                               </tr>
                               <tr align="center">
                                 <th scope="col">Nombre Informe</th>
@@ -114,9 +114,9 @@
                               {% for actividad2 in actividades2 %}
                               {% if actividad2.estado.id == 1 %}
                               <tr align="center">
-                                <td scope="col"><a href="editarGrupoActividad/{{ actividad2.grupoactividad.id }}">{{ actividad2.grupoactividad }}</a></td>
+                                <td scope="col"><a href="editarGrupoActividad/{{ actividad2.grupoactividad.id }}">{{ actividad2.grupoactividad }}</a>Click para editar y ver actividades vinculadas</td>
                                 <td style="color:black"> {{ actividad2.grupoactividad.prioridad }} </td>
-                                <td><a href="eliminarGrupoActividad/{{ actividad2.grupoactividad.id }}">x</a></td>
+                                <td><a href="eliminarGrupoActividad/{{ actividad2.grupoactividad.id }}">x</a>Click para borrar</td>
                               </tr>
                               {% endif %}
                               {% endfor %}
