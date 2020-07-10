@@ -102,8 +102,9 @@ def agregarSolicitud(request, idActividad):
             estado = 1
             nuevaSolicitud = Solicitud.objects.create(nombre=nombre,actividad_id=actividad,sector=sector,estado_id=estado)
             nuevaSolicitud.save()
-            mensaje = 'Solicitud creada correctamente!'
-            context = {'form':form, 'mensaje':mensaje}
+            #mensaje = 'Solicitud creada correctamente!'
+            context = {'form':form}
+            return redirect('/tareas/welcome')
     return render(request, 'tareas/agregarSolicitud.html', context)
 
 def agregarActGrupoAct(request, idGrupoActividad, *args, **kwargs):
@@ -197,8 +198,9 @@ def editarSolicitud(request, idSolicitud):
         if form.is_valid():
             instancia = form.save(commit=False)
             instancia.save()
-            mensaje= "El informe se modificó correctamente!"
-            context = {'form':form,'mensaje':mensaje}
+            #mensaje= "El informe se modificó correctamente!"
+            context = {'form':form}
+            return redirect('/tareas/welcome')
     return render(request, 'tareas/editarSolicitud.html', context)
 
 def listarGrupoAct(request, idGrupoActividad, *args, **kwargs):
@@ -221,8 +223,9 @@ def editarGrupoActividad(request, idGrupoActividad):
         if form.is_valid():
             instancia = form.save(commit=False)
             instancia.save()
-            mensaje= "El informe se modificó correctamente!"
-            context = {'form':form,'mensaje':mensaje,'actividades':actividades,'instancia':instancia}
+            #mensaje= "El informe se modificó correctamente!"
+            context = {'form':form,'actividades':actividades,'instancia':instancia}
+            return redirect('/tareas/welcome')
     return render(request, 'tareas/editarGrupoActividad.html', context)
 
 def eliminarSolicitud(request, idSolicitud):
