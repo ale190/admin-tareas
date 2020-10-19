@@ -59,9 +59,6 @@
                         <a class="nav-link" href="agregarGrupoAct">Agregar Informe</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="actividadesFinalizadas">Actividades Finalizadas</a>
-                      </li>
-                      <li class="nav-item">
                         <a class="nav-link" href="logout">Cerrar sesión</a>
                       </li>
                     </ul>
@@ -75,22 +72,29 @@
                           <table class="table">
                             <thead class="thead-dark">
                               <tr align="center">
-                                <th scope="col" colspan="4">Actividades Pendientes</th>
+                                <th scope="col" colspan="7">Actividades Pendientes</th>
                               </tr>
                               <tr align="center">
                                 <th scope="col">Nombre Actividad</th>
                                 <th scope="col">Prioridad</th>
                                 <th scope="col">Comentarios</th>
-                                <th scope="col">Eliminar Actividad</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
                               </tr>
                               <tbody>
                               {% for actividad in actividades %}
                               {% if actividad.estado.id == 1 %}
                               <tr align="center">
-                                <td><a href="editarActividad/{{ actividad.id }}">{{ actividad.nombre }}</a> (Click para editar actividad y ver solicitudes vinculadas)</td>
+                                <td>{{ actividad.nombre }}</a>
+                                </td>
                                 <td> {{ actividad.prioridad }} </td>
                                 <td>{{ actividad.comentarios|default_if_none:"&nbsp;"}}</td>
-                                <td><a href="eliminarActividad/{{ actividad.id }}">x</a> (Click para borrar)</td>
+                                <td><a href="/tareas/eliminarActividad/{{ actividad.id }}">Eliminar</a></td>
+                                <td><a href="/tareas/editarActividad/{{ actividad.id }}">Editar</a></td>
+                                <td><a href="/tareas/verSolicitudes/{{ actividad.id }}">Solicitudes</a></td>
+                                <td><a href="/tareas/agregarSolicitud/{{ actividad.id }}">Agregar Solicitud</a></td>
                               </tr>
                               {% endif %}
                               {% endfor %}
@@ -101,26 +105,107 @@
                           <table class="table">
                             <thead class="thead-dark">
                               <tr align="center">
-                                <th scope="col" colspan="3">Informes Pendientes(Para ver informes pendientes, debes agregar al menos una actividad a alguno de ellos)</th>
+                                <th scope="col" colspan="7">Informes Pendientes</th>
                               </tr>
                               <tr align="center">
                                 <th scope="col">Nombre Informe</th>
                                 <th scope="col">Prioridad</th>
-                                <th scope="col">Eliminar Informe</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
                               </tr>
                             </thead>
                             <tbody>
+
                               {% for actividad2 in actividades2 %}
                               {% if actividad2.estado.id == 1 %}
+
                               <tr align="center">
-                                <td scope="col"><a href="editarGrupoActividad/{{ actividad2.grupoactividad.id }}">{{ actividad2.grupoactividad }}</a> (Click para editar informe y ver actividades vinculadas)</td>
+                                <td scope="col">{{ actividad2.grupoactividad }}</td>
                                 <td style="color:black"> {{ actividad2.grupoactividad.prioridad }} </td>
-                                <td><a href="eliminarGrupoActividad/{{ actividad2.grupoactividad.id }}">x</a> (Click para borrar)</td>
+                                <td><a href="eliminarGrupoActividad/{{ actividad2.grupoactividad.id }}">Eliminar</a></td>
+                                <td scope="col"><a href="editarGrupoActividad/{{ actividad2.grupoactividad.id }}">Editar</a></td>
+                                <td><a href="verActividadesGrAct/{{ actividad2.grupoactividad.id }}">Actividades</a></td>
+                                <td><a href="/tareas/agregarActividadGrAct/{{ actividad2.grupoactividad.id }}">Agregar Actividad</a></td>
+                              </tr>
+
+                              {% endif %}
+                              {% endfor %}
+
+                            </tbody>
+                          </table>
+
+                          <br>
+
+                          <table class="table">
+                            <thead class="thead-light">
+                              <tr align="center">
+                                <th scope="col" colspan="7">Actividades Finalizadas</th>
+                              </tr>
+                              <tr align="center">
+                                <th scope="col">Nombre Actividad</th>
+                                <th scope="col">Prioridad</th>
+                                <th scope="col">Comentarios</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                              </tr>
+                              <tbody>
+                              {% for actividad in actividades %}
+                              {% if actividad.estado.id == 2 %}
+                              <tr align="center">
+                                <td>{{ actividad.nombre }}</a>
+                                </td>
+                                <td> {{ actividad.prioridad }} </td>
+                                <td>{{ actividad.comentarios|default_if_none:"&nbsp;"}}</td>
+                                <td><a href="/tareas/eliminarActividad/{{ actividad.id }}">Eliminar</a></td>
+                                <td><a href="/tareas/editarActividad/{{ actividad.id }}">Editar</a></td>
+                                <td><a href="/tareas/verSolicitudes/{{ actividad.id }}">Solicitudes</a></td>
+                                <td><a href="/tareas/agregarSolicitud/{{ actividad.id }}">Agregar Solicitud</a></td>
                               </tr>
                               {% endif %}
                               {% endfor %}
+                              </tbody>
+                            </thead>
+                          </table>
+                          <hr>
+                          <table class="table">
+                            <thead class="thead-light">
+                              <tr align="center">
+                                <th scope="col" colspan="7">Informes Finalizados</th>
+                              </tr>
+                              <tr align="center">
+                                <th scope="col">Nombre Informe</th>
+                                <th scope="col">Prioridad</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+
+                              {% for actividad2 in actividades2 %}
+                              {% if actividad2.estado.id == 2 %}
+
+                              <tr align="center">
+                                <td scope="col">{{ actividad2.grupoactividad }}</td>
+                                <td style="color:black"> {{ actividad2.grupoactividad.prioridad }} </td>
+                                <td><a href="eliminarGrupoActividad/{{ actividad2.grupoactividad.id }}">Eliminar</a></td>
+                                <td scope="col"><a href="editarGrupoActividad/{{ actividad2.grupoactividad.id }}">Editar</a></td>
+                                <td><a href="verActividadesGrAct/{{ actividad2.grupoactividad.id }}">Actividades</a></td>
+                                <td><a href="/tareas/agregarActividadGrAct/{{ actividad2.grupoactividad.id }}">Agregar Actividad</a></td>
+                              </tr>
+
+                              {% endif %}
+                              {% endfor %}
+
                             </tbody>
                           </table>
+
+
                           <!--</div>
                 </div>
               </header>-->

@@ -47,9 +47,6 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link" href="/tareas/agregarSolicitud/{{ instancia.id }}">Agregar solicitud</a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link" href="/tareas/welcome">Regresar</a>
             </li>
           </ul>
@@ -91,30 +88,6 @@
             </tbody>
           </thead>
         </table>
-<hr/>
-                <table class="table">
-                  <thead class="thead-dark">
-                    <tr align="center">
-                      <th scope="col" colspan="4">Listado de Solicitudes</th>
-                    </tr>
-                    <tr align="center">
-                      <th scope="col">Nombre Solicitud</th>
-                      <th scope="col">Sector Vinculado</th>
-                      <th scope="col">Estado de Solicitud</th>
-                      <th scope="col">Eliminar Solicitud</th>
-                    </tr>
-                    <tbody>
-                    {% for solicitud in solicitudes %}
-                    <tr align="center">
-                      <td><a href="/tareas/editarSolicitud/{{ solicitud.id }}">{{ solicitud.nombre }}</a></td>
-                      <td>{{ solicitud.sector }}</td>
-                      <td>{{ solicitud.estado }}</td>
-                      <td><a href="/tareas/eliminarSolicitud/{{ solicitud.id }}">x</a></td>
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                  </thead>
-                </table>
               <!--</div>
             </div>
           </header>-->

@@ -19,7 +19,7 @@ class ActividadFormEdicion(forms.ModelForm):
         fields = ['nombre','comentarios','prioridad','grupoactividad','estado']
         labels = {'nombre':'Nombre','comentarios':'Comentarios','prioridad':'Prioridad','grupoactividad':'Informe','estado':'Estado'}
 
-class ActividadGrupoForm(forms.ModelForm):
+class ActividadGrActForm(forms.ModelForm):
     nombre = forms.CharField(max_length=100, required=True, help_text='*')
     comentarios = forms.CharField(max_length=100, required=False)
 
@@ -30,6 +30,7 @@ class ActividadGrupoForm(forms.ModelForm):
 
 class SolicitudForm(forms.ModelForm):
     nombre = forms.CharField(max_length=100, required=True, help_text='*')
+    comentarios = forms.CharField(max_length=100, required=False)
 
     class Meta:
         model = Solicitud
@@ -38,11 +39,12 @@ class SolicitudForm(forms.ModelForm):
 
 class SolicitudFormEdicion(forms.ModelForm):
     nombre = forms.CharField(max_length=100, required=True, help_text='*')
+    comentarios = forms.CharField(max_length=100, required=False)
 
     class Meta:
         model = Solicitud
-        fields = ['nombre','sector','estado']
-        labels = {'nombre':'Nombre','sector':'Sector','estado':'Estado'}
+        fields = ['nombre','sector','estado','comentarios']
+        labels = {'nombre':'Nombre','sector':'Sector','estado':'Estado','comentarios':'Ubicación'}
 
 class GrupoActividadForm(forms.ModelForm):
     nombre = forms.CharField(max_length=100, required=True, help_text='*')

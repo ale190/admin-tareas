@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <title>Editar Actividad</title>
+  <!-- Favicon-->
+  <link rel="icon" type="image/x-icon" href="{% static 'assets/img/favicon.ico' %}" />
+  <!-- Font Awesome icons (free version)-->
+  <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
+  <!-- Google fonts-->
+  <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,00,700italic" rel="stylesheet" type="text/css" />
+  <!-- Third party plugin CSS-->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" rel="stylesheet" />
+  <!-- Core theme CSS (includes Bootstrap)-->
+  <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+</head>
+<body id="page-top">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/tareas/welcome">Regresar</a>
+            </li>
+          </ul>
+      </div>
+      </nav>
+      <table class="table">
+        <thead class="thead-dark">
+          <tr align="center">
+            <th scope="col" colspan="7">Actividades Pendientes</th>
+          </tr>
+          <tr align="center">
+            <th scope="col">Nombre Actividad</th>
+            <th scope="col">Prioridad</th>
+            <th scope="col">Comentarios</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+          <tbody>
+          {% for actividad in actividades %}
+          {% if actividad.estado.id == 1 %}
+          <tr align="center">
+            <td>{{ actividad.nombre }}</td>
+            <td>{{ actividad.prioridad }}</td>
+            <td>{{ actividad.comentarios|default_if_none:"&nbsp;" }}</td>
+            <td><a href="/tareas/eliminarActividad/{{ actividad.id }}">Eliminar</a></td>
+            <td><a href="/tareas/editarActividad/{{ actividad.id }}">Editar</a></td>
+            <td><a href="/tareas/verSolicitudes/{{ actividad.id }}">Solicitudes</a></td>
+            <td><a href="/tareas/agregarSolicitud/{{ actividad.id }}">Agregar Solicitud</a></td>
+          </tr>
+          {% endif %}
+          {% endfor %}
+          </tbody>
+        </thead>
+      </table>
+
+      <br/>
+
+      <table class="table">
+        <thead class="thead-light">
+          <tr align="center">
+            <th scope="col" colspan="7">Actividades Finalizadas</th>
+          </tr>
+          <tr align="center">
+            <th scope="col">Nombre Actividad</th>
+            <th scope="col">Prioridad</th>
+            <th scope="col">Comentarios</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+          <tbody>
+          {% for actividad in actividades %}
+          {% if actividad.estado.id == 2 %}
+          <tr align="center">
+            <td>{{ actividad.nombre }}</td>
+            <td>{{ actividad.prioridad }}</td>
+            <td>{{ actividad.comentarios|default_if_none:"&nbsp;" }}</td>
+            <td><a href="/tareas/eliminarActividad/{{ actividad.id }}">Eliminar</a></td>
+            <td><a href="/tareas/editarActividad/{{ actividad.id }}">Editar</a></td>
+            <td><a href="/tareas/verSolicitudes/{{ actividad.id }}">Solicitudes</a></td>
+            <td><a href="/tareas/agregarSolicitud/{{ actividad.id }}">Agregar Solicitud</a></td>
+          </tr>
+          {% endif %}
+          {% endfor %}
+          </tbody>
+        </thead>
+      </table>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+  <script src="{% static 'js/scripts.js' %}"/>
+  </body>
+</html>

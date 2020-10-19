@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as do_login
 from django.contrib.auth.models import User
-from . forms import ActividadForm, ActividadFormEdicion, ActividadGrupoForm, SolicitudForm, SolicitudFormEdicion, GrupoActividadForm
+from . forms import ActividadForm, ActividadGrActForm, ActividadFormEdicion, SolicitudForm, SolicitudFormEdicion, GrupoActividadForm
 import time
 
 
@@ -56,7 +56,7 @@ def welcome(request, *args, **kwargs):
     #Obtenemos las actividades del usuario logueado y sin informes vinculados
     actividades = Actividad.objects.filter(user=idUs, grupoactividad=None).order_by('prioridad')
     #Obtenemos las actividades del usuario logueado y con informes vinculados
-    actividades2 = Actividad.objects.filter(user=idUs).exclude(grupoactividad=None)
+    actividades2 = Actividad.objects.filter(user=idUs).exclude(grupoactividad=None).distinct('grupoactividad')
     #Obtenemos todas las solicitudes
     solicitudes = Solicitud.objects.all()
     #Obtenemos todas las prioridades
@@ -66,6 +66,7 @@ def welcome(request, *args, **kwargs):
     # Si estamos identificados devolvemos la portada
     if request.user.is_authenticated:
         return render(request, 'tareas/welcome.html', context)
+        str(actividadesPorGrupo)
     # En otro caso redireccionamos al login
     return render(request, "tareas/login.html")
 
@@ -90,6 +91,27 @@ def agregarActividad(request, *args, **kwargs):
             return redirect('/tareas/welcome')
     return render(request, 'tareas/agregarActividad.html', context)
 
+def agregarActividadGrAct(request, idGrupoActividad, *args, **kwargs):
+    form = ActividadGrActForm()
+    context = {'form':form}
+    idU = User.objects.get(id=request.user.id)
+    idUs = idU.id
+    if request.method == 'POST':
+        form = ActividadGrActForm(request.POST)
+        if form.is_valid():
+            nombre = form.cleaned_data.get('nombre')
+            comentarios = form.cleaned_data.get('comentarios')
+            prioridad = form.cleaned_data.get('prioridad')
+            estado = 1
+            usuario = idUs
+            grupoactividad = idGrupoActividad
+            nuevaTarea = Actividad.objects.create(nombre=nombre,comentarios=comentarios,prioridad=prioridad,estado_id=estado,user_id=usuario,grupoactividad_id=grupoactividad)
+            nuevaTarea.save()
+            #mensaje = 'Actividad creada correctamente!'
+            context = {'form':form}
+            return redirect('/tareas/welcome')
+    return render(request, 'tareas/agregarActividadGrAct.html', context)
+
 def agregarSolicitud(request, idActividad):
     form = SolicitudForm()
     context = {'form':form}
@@ -100,49 +122,13 @@ def agregarSolicitud(request, idActividad):
             actividad = idActividad
             sector = form.cleaned_data.get('sector')
             estado = 1
-            nuevaSolicitud = Solicitud.objects.create(nombre=nombre,actividad_id=actividad,sector=sector,estado_id=estado)
+            comentarios = ''
+            nuevaSolicitud = Solicitud.objects.create(nombre=nombre,actividad_id=actividad,sector=sector,estado_id=estado,comentarios=comentarios)
             nuevaSolicitud.save()
             #mensaje = 'Solicitud creada correctamente!'
             context = {'form':form}
             return redirect('/tareas/welcome')
     return render(request, 'tareas/agregarSolicitud.html', context)
-
-def agregarActGrupoAct(request, idGrupoActividad, *args, **kwargs):
-    form = ActividadGrupoForm()
-    context = {'form':form}
-    idU = User.objects.get(id=request.user.id)
-    idUs = idU.id
-    if request.method == 'POST':
-        form = ActividadGrupoForm(request.POST)
-        if form.is_valid():
-            nombre = form.cleaned_data.get('nombre')
-            comentarios = form.cleaned_data.get('comentarios')
-            prioridad = form.cleaned_data.get('prioridad')
-            estado = 1
-            usuario = idUs
-            grupoactividad = idGrupoActividad
-            nuevaTarea = Actividad.objects.create(nombre=nombre,comentarios=comentarios,prioridad=prioridad,estado_id=estado,user_id=usuario,grupoactividad_id=grupoactividad)
-            nuevaTarea.save()
-            context = {'form':form}
-            return redirect('/tareas/welcome')
-    return render(request, 'tareas/agregarActGrupoAct.html', context)
-
-def actividadesFinalizadas(request, *args, **kwargs):
-    #Obtenemos el id del usuario logueado
-    idU = User.objects.get(id=request.user.id)
-    idUs = idU.id
-    #Obtenemos las actividades relacionadas al usuario logueado y sin informes
-    actividades = Actividad.objects.filter(user=idUs, grupoactividad=None).order_by('prioridad')
-    #Obtenemos las actividades relacionadas al usuario logueado y con informes
-    actividades2 = Actividad.objects.filter(user=idUs).exclude(grupoactividad=None)
-    #Obtenemos todas las solicitudes
-    solicitudes = Solicitud.objects.all()
-    #Obtenemos todas las prioridades
-    prioridades = Prioridad.objects.all()
-    #Incluimos los resultados en un contexto
-    context = {'actividades':actividades,'actividades2':actividades2,'solicitudes':solicitudes, 'prioridades':prioridades}
-    return render(request, "tareas/actividadesFinalizadas.html", context)
-
 
 def finalizarTarea(request, idActividad):
     fechaF = time.strftime("%Y-%m-%d %H:%M:%S")
@@ -174,8 +160,6 @@ def editarActividad(request, idActividad):
         if form.is_valid():
             instancia = form.save(commit=False)
             instancia.save()
-            #mensaje= "La actividad se modificó correctamente!"
-            context = {'form':form,'solicitudes':solicitudes}
             return redirect('/tareas/welcome')
     return render(request, 'tareas/editarActividad.html', context)
 
@@ -198,50 +182,27 @@ def editarSolicitud(request, idSolicitud):
         if form.is_valid():
             instancia = form.save(commit=False)
             instancia.save()
-            #mensaje= "El informe se modificó correctamente!"
-            context = {'form':form}
             return redirect('/tareas/welcome')
     return render(request, 'tareas/editarSolicitud.html', context)
 
-def listarGrupoAct(request, idGrupoActividad, *args, **kwargs):
-    #Obtenemos el id del usuario logueado
-    idU = User.objects.get(id=request.user.id)
-    idUs = idU.id
-    #Obtenemos las actividades relacionadas al usuario logueado
-    actividades = Actividad.objects.filter(user=idUs)
-    actividadesInforme = actividades.filter(grupoactividad_id=idGrupoActividad)
-    context = {'actividadesInforme':actividadesInforme}
-    return render(request, "tareas/listaGrupoAct.html", context)
-
 def editarGrupoActividad(request, idGrupoActividad):
     instancia = GrupoActividad.objects.get(id=idGrupoActividad)
-    actividades = Actividad.objects.filter(grupoactividad_id=idGrupoActividad)
     form = GrupoActividadForm(instance=instancia)
-    context = {'form':form,'actividades':actividades,'instancia':instancia}
+    context = {'form':form,'instancia':instancia}
     if request.method == "POST":
         form = GrupoActividadForm(request.POST, instance=instancia)
         if form.is_valid():
             instancia = form.save(commit=False)
             instancia.save()
             #mensaje= "El informe se modificó correctamente!"
-            context = {'form':form,'actividades':actividades,'instancia':instancia}
+            context = {'form':form,'instancia':instancia}
             return redirect('/tareas/welcome')
     return render(request, 'tareas/editarGrupoActividad.html', context)
 
-def editarGrupoActividadFinalizadas(request, idGrupoActividad):
-    instancia = GrupoActividad.objects.get(id=idGrupoActividad)
+def verActividadesGrAct(request, idGrupoActividad):
     actividades = Actividad.objects.filter(grupoactividad_id=idGrupoActividad)
-    form = GrupoActividadForm(instance=instancia)
-    context = {'form':form,'actividades':actividades,'instancia':instancia}
-    if request.method == "POST":
-        form = GrupoActividadForm(request.POST, instance=instancia)
-        if form.is_valid():
-            instancia = form.save(commit=False)
-            instancia.save()
-            #mensaje= "El informe se modificó correctamente!"
-            context = {'form':form,'actividades':actividades,'instancia':instancia}
-            return redirect('/tareas/welcome')
-    return render(request, 'tareas/editarGrupoActividadFinalizadas.html', context)
+    context = {'actividades':actividades}
+    return render(request, 'tareas/actividadesGrAct.html', context)
 
 def eliminarSolicitud(request, idSolicitud):
     instancia = Solicitud.objects.get(id=idSolicitud)
@@ -256,3 +217,9 @@ def eliminarGrupoActividad(request, idGrupoActividad):
     grupoActividad = GrupoActividad.objects.get(id=idGrupoActividad)
     grupoActividad.delete()
     return redirect('/tareas/welcome')
+
+def verSolicitudes(request, idActividad):
+    instancia = Actividad.objects.get(id=idActividad)
+    solicitudes = Solicitud.objects.filter(actividad_id=idActividad)
+    context = {'solicitudes':solicitudes,'instancia':instancia}
+    return render(request, 'tareas/solicitudes.html', context)

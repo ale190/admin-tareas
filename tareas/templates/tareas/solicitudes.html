@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <meta name="description" content="" />
   <meta name="author" content="" />
-  <title>Editar Tareas</title>
+  <title>Editar Actividad</title>
   <!-- Favicon-->
   <link rel="icon" type="image/x-icon" href="{% static 'assets/img/favicon.ico' %}" />
   <!-- Font Awesome icons (free version)-->
@@ -26,7 +26,7 @@
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto my-2 my-lg-0">
-          <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/tareas/agregarActGrupoAct/{{ instancia.id }}">Agregar actividad</a></li>
+          <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/tareas/agregarSolicitud/{{ instancia.id }}">Agregar solicitud</a></li>
           <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/tareas/welcome">Regresar</a></li>
           <li class="nav-item"><a class="nav-link js-scroll-trigger" href="logout">Cerrar sesión</a></li>
         </ul>
@@ -38,7 +38,6 @@
   <!--<header class="masthead">
     <div class="container h-100">
       <div class="row h-100 align-items-center justify-content-center text-center">-->
-
 
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,31 +56,68 @@
           </form>-->
       </div>
       </nav>
-
-
-        <table class="table">
-          <thead class="thead-dark">
-            <form action="" method="POST">
-              {% csrf_token %}
-            <tr align="center">
-              <th scope="col" colspan="2">Editar Informe</th>
-            </tr>
-            <tbody>
-            <tr align="right">
-              <td>Nombre:</td><td align="center">{{ form.nombre }}</td>
-            </tr>
-            <tr align="right">
-              <td>Prioridad:</td><td align="center">{{ form.prioridad }}</td>
-            </tr>
-            <tr align="center">
-              <td colspan="2"><button type="submit">Guardar cambios</button></td>
-            </tr>
-            </form>
-            </tbody>
-          </thead>
-        </table>
-<hr/>
-
+                <table class="table">
+                  <thead class="thead-dark">
+                    <tr align="center">
+                      <th scope="col" colspan="7">Solicitudes Pendientes</th>
+                    </tr>
+                    <tr align="center">
+                      <th scope="col">Nombre Solicitud</th>
+                      <th scope="col">Sector Vinculado</th>
+                      <th scope="col">Estado de Solicitud</th>
+                      <th scope="col">Ubicación</th>
+                      <th scope="col"></th>
+                      <th scope="col"></th>
+                    </tr>
+                    <tbody>
+                    {% for solicitud in solicitudes %}
+                    {% if solicitud.estado.id == 1 %}
+                    <tr align="center">
+                      <td>{{ solicitud.nombre }}</a></td>
+                      <td>{{ solicitud.sector }}</td>
+                      <td>{{ solicitud.estado }}</td>
+                      <td>{{ solicitud.comentarios|default_if_none:"&nbsp;" }}</td>
+                      <td><a href="/tareas/eliminarSolicitud/{{ solicitud.id }}">Eliminar</a></td>
+                      <td><a href="/tareas/editarSolicitud/{{ solicitud.id }}">Editar</a></td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                    </tbody>
+                  </thead>
+                </table>
+                <br>
+                <table class="table">
+                  <thead class="thead-light">
+                    <tr align="center">
+                      <th scope="col" colspan="7">Solicitudes Finalizadas</th>
+                    </tr>
+                    <tr align="center">
+                      <th scope="col">Nombre Solicitud</th>
+                      <th scope="col">Sector Vinculado</th>
+                      <th scope="col">Estado de Solicitud</th>
+                      <th scope="col">Ubicación</th>
+                      <th scope="col"></th>
+                      <th scope="col"></th>
+                    </tr>
+                    <tbody>
+                    {% for solicitud in solicitudes %}
+                    {% if solicitud.estado.id == 2 %}
+                    <tr align="center">
+                      <td>{{ solicitud.nombre }}</a></td>
+                      <td>{{ solicitud.sector }}</td>
+                      <td>{{ solicitud.estado }}</td>
+                      <td>{{ solicitud.comentarios|default_if_none:"&nbsp;" }}</td>
+                      <td><a href="/tareas/eliminarSolicitud/{{ solicitud.id }}">Eliminar</a></td>
+                      <td><a href="/tareas/editarSolicitud/{{ solicitud.id }}">Editar</a></td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                    </tbody>
+                  </thead>
+                </table>
+              <!--</div>
+            </div>
+          </header>-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
